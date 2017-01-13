@@ -20,8 +20,16 @@ export class RegisterComponent {
     ) { }
 
     register() {
+        console.log("test");
         if (this.ngForm.form.invalid) {
             return;
+        }
+        else{
+            this.registrationService.register(this.model)
+                .then(
+                    ()=>{console.log("ok"); this.router.navigateByUrl("/login");},
+                    ()=>{console.log("KO");}
+                );
         }
     }
 }
