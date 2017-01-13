@@ -16,6 +16,10 @@ export class LoginComponent  {
     ) { }
 
     login() {
-        return this.authService.authenticate(this.model);
+        this.authService.authenticate(this.model).then(
+                    ()=>{console.log("ok"); this.router.navigateByUrl("/");},
+                    //here do the handle of rrors liek already used userName
+                    ()=>{console.log("KO");}
+                );
     }
 }
