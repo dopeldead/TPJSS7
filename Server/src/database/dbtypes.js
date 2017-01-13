@@ -1,4 +1,9 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,28 +13,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const decorators_1 = require("./decorators");
-const decorators_2 = require("./decorators");
-class GraphItemBase extends Object {
-    constructor(idOrObj) {
-        super();
+var decorators_1 = require("./decorators");
+var decorators_2 = require("./decorators");
+var GraphItemBase = (function (_super) {
+    __extends(GraphItemBase, _super);
+    function GraphItemBase(idOrObj) {
+        var _this = _super.call(this) || this;
         if (typeof idOrObj === "string") {
-            this.id = idOrObj;
+            _this.id = idOrObj;
         }
         else if (typeof idOrObj === "object") {
-            let propsMeta = Reflect.getMetadata(decorators_2.PropertiesKey, this.constructor);
+            var propsMeta = Reflect.getMetadata(decorators_2.PropertiesKey, _this.constructor);
             if (!propsMeta) {
-                throw new Error("Cannot resolve metadata for graph item: " + this.constructor);
+                throw new Error("Cannot resolve metadata for graph item: " + _this.constructor);
             }
-            for (let propName in idOrObj) {
-                this[propName] = idOrObj[propName];
+            for (var propName in idOrObj) {
+                _this[propName] = idOrObj[propName];
             }
         }
+        return _this;
     }
-}
+    return GraphItemBase;
+}(Object));
 exports.GraphItemBase = GraphItemBase;
-class Vertex extends GraphItemBase {
-}
+var Vertex = (function (_super) {
+    __extends(Vertex, _super);
+    function Vertex() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return Vertex;
+}(GraphItemBase));
 __decorate([
     decorators_1.Prop({
         indexed: true,
@@ -48,13 +61,16 @@ __decorate([
     __metadata("design:type", Number)
 ], Vertex.prototype, "creationTime", void 0);
 exports.Vertex = Vertex;
-class Edge extends GraphItemBase {
-    constructor(from, to) {
-        super();
-        this.from = from;
-        this.to = to;
+var Edge = (function (_super) {
+    __extends(Edge, _super);
+    function Edge(from, to) {
+        var _this = _super.call(this) || this;
+        _this.from = from;
+        _this.to = to;
+        return _this;
     }
-}
+    return Edge;
+}(GraphItemBase));
 __decorate([
     decorators_1.Prop({
         indexed: false,

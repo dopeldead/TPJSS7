@@ -1,9 +1,9 @@
 "use strict";
-const path = require("path");
-const _ = require("lodash");
-const env = process.env.NODE_ENV || "development";
-const config = require(`./${env}`).default;
-const defaults = {
+var path = require("path");
+var _ = require("lodash");
+var env = process.env.NODE_ENV || "development";
+var config = require("./" + env).default;
+var defaults = {
     root: path.join(__dirname, "/..")
 };
 _.assign(config, defaults);

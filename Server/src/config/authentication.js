@@ -1,10 +1,10 @@
 "use strict";
-const passport_http_bearer_1 = require("passport-http-bearer");
-const index_1 = require("./env/index");
-const kernel_1 = require("./kernel");
-const constants_1 = require("../constants");
-const jwt = require("jsonwebtoken");
-const BearerStrategy = require("passport-http-bearer").Strategy;
+var passport_http_bearer_1 = require("passport-http-bearer");
+var index_1 = require("./env/index");
+var kernel_1 = require("./kernel");
+var constants_1 = require("../constants");
+var jwt = require("jsonwebtoken");
+var BearerStrategy = require("passport-http-bearer").Strategy;
 function configureAuthentication(passport) {
     // Configure the Bearer strategy for use by Passport.
     //
@@ -13,22 +13,22 @@ function configureAuthentication(passport) {
     // `cb` with a user object, which will be set at `req.user` in route handlers
     // after authentication.
     passport.use(new passport_http_bearer_1.Strategy(function (token, cb) {
-        let db = kernel_1.default.get(constants_1.TYPES.UserStore);
+        var db = kernel_1.default.get(constants_1.TYPES.UserStore);
         try {
-            let identity = jwt.verify(token, index_1.default.jwtSecret);
-            db.find(identity.id).then(user => {
-                let time = new Date().getTime();
+            var identity_1 = jwt.verify(token, index_1.default.jwtSecret);
+            db.find(identity_1.id).then(function (user) {
+                var time = new Date().getTime();
                 if (user
                     && user.enabled
                     && user.accessToken
                     && user.accessToken === token
-                    && identity.expirationTime > time) {
+                    && identity_1.expirationTime > time) {
                     cb(null, user);
                 }
                 else {
                     cb(null, false);
                 }
-            }).catch(e => {
+            }).catch(function (e) {
                 cb(e);
             });
         }

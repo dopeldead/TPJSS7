@@ -1,7 +1,7 @@
 import {Discoverer} from "./discoverer";
 import {ClassRegistry} from "./registry";
 import {DbDeployer} from "./deployer";
-import TYPES from "../constants/types";
+import TYPES from "../constants/TYPES";
 import { LoggerInstance } from "winston";
 import { IGraphDb } from "../services/IGraphDb";
 import { NeoGraphDb} from "../services/impl/NeoGraphDb";
