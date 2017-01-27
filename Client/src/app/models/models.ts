@@ -12,8 +12,8 @@ export interface AuthenticationResult {
 export class UserRegistration {
     userName: string;
     password: string;
-    email?: string;
-    pictureUrl?: string;
+    email: string;
+    pictureUrl: string;
 }
 
 export class User {
