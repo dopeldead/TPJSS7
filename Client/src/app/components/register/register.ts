@@ -14,6 +14,8 @@ export class RegisterComponent {
 
     model = new UserRegistration();
     userExists : boolean;
+    badAvatar : boolean;
+    badPass : boolean;
 
     constructor(
         private registrationService: RegistrationService,
@@ -26,6 +28,14 @@ export class RegisterComponent {
             return;
         }
         else{
+            if(this.model.pictureUrl.startsWith("http://images.google") ) {
+                this.badAvatar = true;
+                
+            }
+            if(this.model.password.length < 6)  {
+                this.badPass = true;
+                
+            }
             this.registrationService.usernameExists(this.model.userName)
                 .then(
                     () => {this.userExists = true;
