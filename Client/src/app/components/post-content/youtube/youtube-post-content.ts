@@ -9,7 +9,8 @@ export class YoutubeFeedContentComponent {
     @Input() postContent: YoutubePostContent ;
     constructor(
         private sanitizer: DomSanitizer
-    ){}
+    ){
+    }
 
     get url() {
         return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + this.postContent.value.videoId);

@@ -13,11 +13,15 @@
     <div *ngIf="post.content!=undefined">
     <picture-post-content *ngIf="post.content.type=='picture'" [postContent]="post.content">
 
-    </picture-post-content>    
+    </picture-post-content>
+    <video-post-content *ngIf="post.content.type=='video'" [postContent]="post.content">
+
+    </video-post-content>
+    <youtube-post-content *ngIf="post.content.type=='youtube'" [postContent]="post.content">
+
+    </youtube-post-content>  
     </div>
-    <div *ngIf="post.content==undefined">
-            <pre class="message">{{post.message}}</pre>
-    </div>
+    <pre class="message">{{post.message}}</pre>
 
 </div>
 <div class="footer">

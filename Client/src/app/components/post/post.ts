@@ -19,7 +19,6 @@ export class PostComponent {
         let res = this.parser.parse(this.post)
         
         this.post.content = res==null?this.post.content:res;
-        console.log(this.post.content);
     }
 
 }

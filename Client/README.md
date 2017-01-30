@@ -31,9 +31,6 @@
 
 ### Level I
 
-5. Afficher une image si le message contient une url vers une image
-6. Afficher une video si le message contient une url vers une vidéo (https://www.html5rocks.com/en/tutorials/video/basics/devstories.mp4)
-7. Afficher le player de youtube si le message contient un lien youtube
 8. Ajouter le bouton like
 
 ### Level II
