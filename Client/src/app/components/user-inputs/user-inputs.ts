@@ -27,6 +27,7 @@ export class UserInputsComponent {
         }
         else{
             this.postervice.post(this.channelId,this.message);
+            this.ngForm.reset();
         }
     }
 }
