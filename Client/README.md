@@ -17,12 +17,6 @@
 
 ### Login
 
-#### Level I
-
-1. Faire le formulaire de login
-2. Rendre username et le mot de passe obligatoire
-3. Rediriger l'utilisateur sur /
-
 #### Level II
 
 4. Afficher les messages d'erreurs de validation pour chaque champs
@@ -30,38 +24,14 @@
 
 ### Register
 
-#### Level I
-
-1. Faire le formulaire pour l'ajout d'un user
-2. Rendre username et le mot de passe obligatoire
-3. En cas de succès, rediriger l'utilisateur sur /login
-
 #### Level II
 4. Afficher les messages d'erreurs de validation  pour chaque champs
 5. Gérer les username déjà utilisés
-
-
-### Channel
-
-#### Level I
-
-1. Afficher la liste des channels dans le menu
-2. Pouvoir créer un nouveau channel
-3. Naviguer sur un channel au clic dans le menu
-
-#### Level II
-
-4. Sélectionner par défaut le premier channel de la liste
-5. Ajouter ajouter les nouveaux channels dynamiquement
 
 ### Post 
 
 ### Level I
 
-1. Afficher les postes reçues pour le channel courant
-2. Afficher l'auteur des messages
-3. Afficher la date du postes
-4. Insérer les nouveaux postes reçues via WebSocket
 5. Afficher une image si le message contient une url vers une image
 6. Afficher une video si le message contient une url vers une vidéo (https://www.html5rocks.com/en/tutorials/video/basics/devstories.mp4)
 7. Afficher le player de youtube si le message contient un lien youtube
