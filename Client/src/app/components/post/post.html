@@ -6,7 +6,13 @@
     </div>
     <div class="right">
         <div class="date" >{{post.creationTime|date:"dd/MM HH:mm"}}</div>
-        <div class="actions"><a [class.liked]="post.liked"(click)="DoLike()" ><i class="glyphicon glyphicon-heart"></i></a></div>
+        <div class="actions">
+            <a [class.liked]="post.liked"(click)="DoLike()" >
+                <i class="glyphicon glyphicon-heart"></i>
+            </a>
+            <button class="glyphicon glyphicon-plus reply" (click)="DoAnswer()"></button>
+    </div>
+    
     </div>
 </div>
 <div class="body">
@@ -51,21 +57,29 @@
     .right {
         width: 100%;
         display: flex;
-        /*align-items: center;*/
         justify-content: flex-end;
     }
     .right > .date {
         padding-left: 10px;
+        padding-right: 15px;
     }
     .actions > a {
         color: white;
         text-shadow: 0 0 3px black;
         cursor: pointer;
+        padding-right: 15px;
     }
     .actions > a.liked {
         color: #f17070;
         text-shadow: none;
         cursor: default;
+        padding-right: 15px;
+    }
+    .reply{
+        background-color: transparent;
+        padding-right: 5px;
+        border-color: transparent;
+        border:0px;
     }
     pre.message {
         background: none;

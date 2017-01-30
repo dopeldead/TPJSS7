@@ -26,5 +26,7 @@ export class PostComponent {
      OnLike = (like:Like) => {
          if(like.user.id===this.user.id && like.post.id===this.post.id) this.post.liked=true;
     }
-
+    DoAnswer(){
+        
+    }
 }
