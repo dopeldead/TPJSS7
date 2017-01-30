@@ -10,10 +10,15 @@
     </div>
 </div>
 <div class="body">
-    <pre class="message">{{post.message}}</pre>
-    <div *ngIf="post.content">
+    <div *ngIf="post.content!=undefined">
+    <picture-post-content *ngIf="post.content.type=='picture'" [postContent]="post.content">
 
+    </picture-post-content>    
     </div>
+    <div *ngIf="post.content==undefined">
+            <pre class="message">{{post.message}}</pre>
+    </div>
+
 </div>
 <div class="footer">
     
