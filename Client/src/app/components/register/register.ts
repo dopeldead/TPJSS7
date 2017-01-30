@@ -23,29 +23,35 @@ export class RegisterComponent {
     ) { }
 
     register() {
-        console.log("test");
+        this.userExists = false; this.badPass = false; this.badAvatar = false
         if (this.ngForm.form.invalid) {
             return;
         }
         else{
+            if(this.model.password.length < 6)  {
+                this.badPass = true; 
+            }
             if(this.model.pictureUrl.startsWith("http://images.google") ) {
                 this.badAvatar = true;
-                
             }
-            if(this.model.password.length < 6)  {
-                this.badPass = true;
-                
+            
+            if(this.badPass || this.badAvatar){
+                return;
+            } else {
+                //this.registrationService.usernameExists(this.model.userName)
+                //.then(
+                  //  () => {this.userExists = true;
+                //});
+                this.registrationService.register(this.model)
+                    .then(
+                        
+                        ()=>{console.log("ok"); this.router.navigateByUrl("/login");},
+                        
+                        ()=>{console.log("KO");
+                        
+                    });
             }
-            this.registrationService.usernameExists(this.model.userName)
-                .then(
-                    () => {this.userExists = true;
-                });
-            this.registrationService.register(this.model)
-                .then(
-                    ()=>{console.log("ok"); this.router.navigateByUrl("/login");},
-                    //here do the handle of rrors liek already used userName
-                    ()=>{console.log("KO");
-                });
+            
         }
     }
 }
