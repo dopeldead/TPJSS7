@@ -7,7 +7,10 @@
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
         <label for="password">Mot de Passe</label>
         <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
-
+        <br>
+        <div *ngIf="loginFailed === true" class="loginError">
+            Utilisateur ou passe invalide.
+        </div>
     </div>
     <div class="form-group">
         <button [disabled]="!f.form.valid" class="btn btn-primary">Se Connecter</button>
@@ -21,5 +24,14 @@
         display: block;
         background: white;
         padding: 20px;
+    
+    }
+    .loginError {
+        background-color: darkred;
+        font-weight: bold;
+        color: white;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 20px;
     }
 </style>
