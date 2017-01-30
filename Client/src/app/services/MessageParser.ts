@@ -24,7 +24,7 @@ export class MessageParser {
            return new PicturePostContent(pictureMatche[0]);
         }
         if(youtubeMatche) {
-           return new YoutubePostContent(youtubeMatche[0]);
+           return new YoutubePostContent(youtubeMatche[2]);
         }
         if(videoMatche) {
            return new VideoPostContent(videoMatche[0]);
