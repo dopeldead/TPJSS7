@@ -1,7 +1,7 @@
 import { Component, Input,OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostSocketService, PostService } from 'services';
-import { Post, PostContent } from 'models';
+import { Post, PostContent,Channel } from 'models';
 
 @Component({
   selector: 'social-feed', 
@@ -17,12 +17,18 @@ export class SocialFeedComponent implements OnInit {
         private route: ActivatedRoute
     ) {}
 
-   async ngOnInit() {
+   ngOnInit() {
         this.route.params
             .subscribe((params) => {
                 this.channelId = params['id'];
+                 this.postService.getAll(this.channelId).then((e)=>this.items=e);
             } );
-            this.items = await this.postService.getAll(this.channelId);
-            console.log(this.items);
-    }    
+           
+        this.postSocket.onPost(this.addPost);
+    }
+
+    addPost = (post:Post) => {
+        this.items.unshift(post);
+    }
+   
 }
