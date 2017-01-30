@@ -30,10 +30,6 @@
 
 ### Post 
 
-### Level I
-
-8. Ajouter le bouton like
-
 ### Level II
 9. Retirer les urls des messages parsés pour ne restituer que son contenu
 
