@@ -1,6 +1,6 @@
 import { Component, Input,OnInit, EventEmitter } from '@angular/core';
 import { Channel } from 'models';
-import { ChannelService } from '../../services/index';
+import { ChannelService, PostSocketService } from '../../services/index';
 import { Router } from '@angular/router';
 
 
@@ -12,8 +12,10 @@ export class MenuComponent implements OnInit {
     model = new Channel();
 
     constructor(private channelService: ChannelService,
-            private router : Router
+            private router : Router,
+            private postSocket: PostSocketService
     ) {
+        this.postSocket.onNewChannel(this.addChannel)
     }
     async ngOnInit() { 
         this.channels = (await this.channelService.getAll()).sort(this.sortChannels);
@@ -41,9 +43,11 @@ export class MenuComponent implements OnInit {
     if (n1.name < n2.name) {
         return -1;
     }
-
     return 0;
-}
+    }
+   addChannel = (chan:Channel) => {
+        this.channels.unshift(chan);
+    }
     @Input() channels: Channel[]; 
    
 }
