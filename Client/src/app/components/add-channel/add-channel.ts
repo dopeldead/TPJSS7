@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { ModalDirective } from 'ng2-bootstrap';
@@ -19,10 +19,12 @@ export class AddChannelComponent {
     constructor(
     ) {
     }
+  @Output() callParent = new EventEmitter<string>();
 
     save() {
         if (this.ngForm.valid) {
-      
+            console.log("T2");
+            this.callParent.emit(this.model.name);
         }
     }
 }

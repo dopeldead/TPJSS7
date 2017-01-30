@@ -28,7 +28,7 @@ export class AuthenticatedUser {
     accessToken: string;
     pictureUrl: string;
 }
-export interface Channel {
+export class Channel {
     id: string;
     name: string;
 }
