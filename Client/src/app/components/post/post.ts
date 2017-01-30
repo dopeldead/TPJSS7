@@ -8,7 +8,6 @@ import { PostService, PostSocketService, LoggedUser, MessageParser } from 'servi
 })
 export class PostComponent { 
     @Input() post: Post;
-    
     constructor(
         private postSocket: PostSocketService, 
         private user: LoggedUser,
