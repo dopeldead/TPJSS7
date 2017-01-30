@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input,OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PostSocketService, PostService } from 'services';
 import { Post, PostContent } from 'models';
@@ -8,8 +8,8 @@ import { Post, PostContent } from 'models';
   templateUrl: 'social-feed.html'
 })
 export class SocialFeedComponent implements OnInit { 
-    items: Post[] = [];
     channelId: string;
+    items: Post[];
 
     constructor(
         private postService: PostService, 
@@ -17,16 +17,12 @@ export class SocialFeedComponent implements OnInit {
         private route: ActivatedRoute
     ) {}
 
-    ngOnInit() {
+   async ngOnInit() {
         this.route.params
             .subscribe((params) => {
                 this.channelId = params['id'];
-                this.postService
-                    .getAll(this.channelId)
-                    .then((items) => {
-                        this.items = items
-                    });
             } );
-    }
-    
+            this.items = await this.postService.getAll(this.channelId);
+            console.log(this.items);
+    }    
 }

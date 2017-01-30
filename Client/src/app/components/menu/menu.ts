@@ -1,6 +1,8 @@
 import { Component, Input,OnInit, EventEmitter } from '@angular/core';
 import { Channel } from 'models';
 import { ChannelService } from '../../services/index';
+import { Router } from '@angular/router';
+
 
 @Component({
     selector: 'menu',
@@ -9,10 +11,14 @@ import { ChannelService } from '../../services/index';
 export class MenuComponent implements OnInit { 
     model = new Channel();
 
-    constructor(private channelService: ChannelService) {
+    constructor(private channelService: ChannelService,
+            private router : Router
+    ) {
     }
     async ngOnInit() { 
         this.channels = (await this.channelService.getAll()).sort(this.sortChannels);
+        if(this.channels.length>0)
+        this.router.navigateByUrl("/channel/"+this.channels[0].id);
     }
     async save() {
          if(this.channels.findIndex(x=>x.name===this.model.name)===-1){

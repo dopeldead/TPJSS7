@@ -1,6 +1,6 @@
 <div class="social-app-feed">
-    <!-- Itérer sur les postes-->
-    <!--<post></post>-->
+    <post *ngFor="let post of items" [post]="post">
+    </post>
 </div>
 <div class="social-app-inputs">
     <user-inputs [channelId]="channelId"></user-inputs>
