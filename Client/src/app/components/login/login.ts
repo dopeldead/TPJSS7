@@ -12,8 +12,7 @@ export class LoginComponent  {
     constructor(
             private authService: AuthenticationService,
             private router : Router,
-            //private loginError  : Boolean, 
-    ) { }
+    ) {}
 
     login() {
         this.authService.authenticate(this.model).then(
@@ -21,8 +20,9 @@ export class LoginComponent  {
                         this.router.navigateByUrl("/");
                     },
                     //here do the handle of rrors liek already used userName
-                    ()=>{console.log("KO");
-                        //loginError = true;
+                    ()=> {console.log("KO");
+                        alert("Couple user/pass invalide");
+                          
                     }
                 );
     }
