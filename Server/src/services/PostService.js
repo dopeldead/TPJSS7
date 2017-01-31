@@ -31,7 +31,7 @@ let PostService = class PostService {
         this.channelService = channelService;
     }
     find(id) {
-        return this.db.first(`match (u:User)-[]-(p:Post {id: {id}})-[]-(c:Channel) return p, c, u`, { id })
+        return this.db.first(`match (u:User)-[:USER_POST]-(p:Post {id: {id}})-[]-(c:Channel) return p, c, u`, { id })
             .then(r => {
             if (r && r.p) {
                 let post = new graph_1.Post(r.p);

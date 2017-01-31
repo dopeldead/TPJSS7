@@ -1,4 +1,9 @@
-<div class="item"></div>
+<div class="item">
+   <div *ngFor="let notif of notifications">
+       <h4>{{notif.title}}</h4>
+       <p>{{notif.text}}</p>
+       </div>
+</div>
 <style>
     :host {
         display: block;

@@ -16,7 +16,7 @@ export class PostService {
     }
 
     find(id: string): Promise<Post> { 
-        return this.db.first<any>(`match (u:User)-[]-(p:Post {id: {id}})-[]-(c:Channel) return p, c, u`, {id})
+        return this.db.first<any>(`match (u:User)-[:USER_POST]-(p:Post {id: {id}})-[]-(c:Channel) return p, c, u`, {id})
             .then( r => {
                 if (r && r.p) {
                     let post =  new Post(r.p);

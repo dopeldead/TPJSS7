@@ -21,11 +21,6 @@
 
 4. Afficher les messages d'erreurs de validation pour chaque champs
 
-### Register
-
-#### Level II
-
-
 ### Post 
 
 ### Level II
@@ -36,15 +31,6 @@
 11. Remplacer les liens http par des balises <a>...</a>.
 
 ### Activités et notifications 
-
-### Level I
-1. Créer un NotificationService
-2. Lister les activités dans le menu à droite
-3. Ajouter une activté lors d'un nouveau poste via le NotificationService
-4. Ajouter une activté lors d'un commentaire sur un poste via le NotificationService
-5. Ajouter une activté lorsqu'un membre se connecte via le NotificationService
-6. Ajouter une activité lors d'un like via le NotificationService
-7. Ajouter une activité lors de l'ajout d'un channel via le NotificationService
 
 ### Level II
 8. Afficher une popup de notification avec [angular2-notifications](https://github.com/flauc/angular2-notifications)
