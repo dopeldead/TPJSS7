@@ -11,33 +11,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var inversify_express_utils_1 = require("inversify-express-utils");
-var inversify_1 = require("inversify");
-var constants_1 = require("../constants");
-var utils_1 = require("../utils");
-var services_1 = require("../services");
-var request_1 = require("../models/request");
-var ChannelController = (function () {
-    function ChannelController(_db, channelService) {
+const inversify_express_utils_1 = require("inversify-express-utils");
+const inversify_1 = require("inversify");
+const constants_1 = require("../constants");
+const utils_1 = require("../utils");
+const services_1 = require("../services");
+const request_1 = require("../models/request");
+let ChannelController = class ChannelController {
+    constructor(_db, channelService) {
         this._db = _db;
         this.channelService = channelService;
     }
-    ChannelController.prototype.getAll = function (req, res, next) {
+    getAll(req, res, next) {
         return this.channelService.findAll();
-    };
-    ChannelController.prototype.getPosts = function (req, res, next) {
+    }
+    getPosts(req, res, next) {
         return this.channelService.getPosts(req.params.id, req.user.id);
-    };
-    ChannelController.prototype.create = function (req, res, next) {
+    }
+    create(req, res, next) {
         return this.channelService.create(req.body);
-    };
-    ChannelController.prototype.addPost = function (req, res, next) {
-        var newPost = req.body;
+    }
+    addPost(req, res, next) {
+        let newPost = req.body;
         newPost.userId = req.user.id;
         return this.channelService.addPost(req.params.id, newPost);
-    };
-    return ChannelController;
-}());
+    }
+};
 __decorate([
     inversify_express_utils_1.Get("/"),
     __metadata("design:type", Function),

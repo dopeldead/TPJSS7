@@ -1,8 +1,8 @@
 "use strict";
-var chai = require("chai");
-var expect = chai.expect;
-describe("Dumb test", function () {
-    it("1 should be equla to 1!", function () {
+const chai = require("chai");
+const expect = chai.expect;
+describe("Dumb test", () => {
+    it("1 should be equla to 1!", () => {
         expect(1).to.equal(1);
     });
 });

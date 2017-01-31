@@ -1,28 +1,23 @@
 "use strict";
-var ClassRegistry = (function () {
-    function ClassRegistry() {
+class ClassRegistry {
+    constructor() {
         this._classes = {};
     }
-    Object.defineProperty(ClassRegistry, "current", {
-        get: function () {
-            if (!ClassRegistry._current) {
-                ClassRegistry.initialize();
-            }
-            return ClassRegistry._current;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    ClassRegistry.initialize = function () {
+    static get current() {
+        if (!ClassRegistry._current) {
+            ClassRegistry.initialize();
+        }
+        return ClassRegistry._current;
+    }
+    static initialize() {
         ClassRegistry._current = new ClassRegistry();
-    };
-    ClassRegistry.prototype.register = function (className, gClass) {
+    }
+    register(className, gClass) {
         this._classes[className] = gClass;
-    };
-    ClassRegistry.prototype.getClasses = function () {
+    }
+    getClasses() {
         return this._classes;
-    };
-    return ClassRegistry;
-}());
+    }
+}
 exports.ClassRegistry = ClassRegistry;
 //# sourceMappingURL=registry.js.map

@@ -11,22 +11,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var inversify_express_utils_1 = require("inversify-express-utils");
-var inversify_1 = require("inversify");
-var constants_1 = require("../constants");
-var utils_1 = require("../utils");
-var HomeController = (function () {
-    function HomeController(_db) {
+const inversify_express_utils_1 = require("inversify-express-utils");
+const inversify_1 = require("inversify");
+const constants_1 = require("../constants");
+const utils_1 = require("../utils");
+let HomeController = class HomeController {
+    constructor(_db) {
         this._db = _db;
     }
-    HomeController.prototype.get = function (req, res, next) {
-        return "Hello world";
-    };
-    HomeController.prototype.getProtecetedResource = function (req, res, next) {
-        return "Your are authorized !";
-    };
-    return HomeController;
-}());
+    get(req, res, next) {
+        return `Hello world`;
+    }
+    getProtecetedResource(req, res, next) {
+        return `Your are authorized !`;
+    }
+};
 __decorate([
     inversify_express_utils_1.Get("/"),
     __metadata("design:type", Function),

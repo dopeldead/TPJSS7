@@ -11,27 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var inversify_express_utils_1 = require("inversify-express-utils");
-var inversify_1 = require("inversify");
-var constants_1 = require("../constants");
-var utils_1 = require("../utils");
-var services_1 = require("../services");
-var request_1 = require("../models/request");
-var PostController = (function () {
-    function PostController(_db, postService) {
+const inversify_express_utils_1 = require("inversify-express-utils");
+const inversify_1 = require("inversify");
+const constants_1 = require("../constants");
+const utils_1 = require("../utils");
+const services_1 = require("../services");
+const request_1 = require("../models/request");
+let PostController = class PostController {
+    constructor(_db, postService) {
         this._db = _db;
         this.postService = postService;
     }
-    PostController.prototype.like = function (req, res, next) {
+    like(req, res, next) {
         return this.postService.like(req.params.id, req.user.id);
-    };
-    PostController.prototype.comment = function (req, res, next) {
-        var newComment = req.body;
+    }
+    comment(req, res, next) {
+        let newComment = req.body;
         newComment.userId = req.user.id;
         return this.postService.comment(req.params.id, newComment);
-    };
-    return PostController;
-}());
+    }
+};
 __decorate([
     inversify_express_utils_1.Post("/:id/like"),
     __metadata("design:type", Function),

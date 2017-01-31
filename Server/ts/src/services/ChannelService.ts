@@ -18,7 +18,7 @@ export class ChannelService {
     create(newChannel: NewChannel): Promise<Channel> {
         const channel = new Channel();
         channel.name = newChannel.name;
-
+        
         return this.db.createVertex(channel).then( c => {
             this.socketService.emit("channel:add", channel);
             return c;

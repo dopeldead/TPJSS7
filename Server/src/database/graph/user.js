@@ -1,9 +1,4 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13,15 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var decorators_1 = require("../decorators");
-var dbtypes_1 = require("../dbtypes");
-var User = (function (_super) {
-    __extends(User, _super);
-    function User() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return User;
-}(dbtypes_1.Vertex));
+const decorators_1 = require("../decorators");
+const dbtypes_1 = require("../dbtypes");
+let User = class User extends dbtypes_1.Vertex {
+};
 __decorate([
     decorators_1.Prop({
         readonly: true,
@@ -64,40 +54,29 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "pictureUrl", void 0);
 User = __decorate([
-    decorators_1.GraphItem("User")
+    decorators_1.GraphItem("User"),
+    __metadata("design:paramtypes", [])
 ], User);
 exports.User = User;
-var UserPostEdge = (function (_super) {
-    __extends(UserPostEdge, _super);
-    function UserPostEdge() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return UserPostEdge;
-}(dbtypes_1.Edge));
+let UserPostEdge = class UserPostEdge extends dbtypes_1.Edge {
+};
 UserPostEdge = __decorate([
-    decorators_1.GraphItem("USER_POST")
+    decorators_1.GraphItem("USER_POST"),
+    __metadata("design:paramtypes", [])
 ], UserPostEdge);
 exports.UserPostEdge = UserPostEdge;
-var LikeEdge = (function (_super) {
-    __extends(LikeEdge, _super);
-    function LikeEdge() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return LikeEdge;
-}(dbtypes_1.Edge));
+let LikeEdge = class LikeEdge extends dbtypes_1.Edge {
+};
 LikeEdge = __decorate([
-    decorators_1.GraphItem("LIKE")
+    decorators_1.GraphItem("LIKE"),
+    __metadata("design:paramtypes", [])
 ], LikeEdge);
 exports.LikeEdge = LikeEdge;
-var UserCommentEdge = (function (_super) {
-    __extends(UserCommentEdge, _super);
-    function UserCommentEdge() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return UserCommentEdge;
-}(dbtypes_1.Edge));
+let UserCommentEdge = class UserCommentEdge extends dbtypes_1.Edge {
+};
 UserCommentEdge = __decorate([
-    decorators_1.GraphItem("USER_COMMENT")
+    decorators_1.GraphItem("USER_COMMENT"),
+    __metadata("design:paramtypes", [])
 ], UserCommentEdge);
 exports.UserCommentEdge = UserCommentEdge;
 //# sourceMappingURL=user.js.map

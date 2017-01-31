@@ -1,5 +1,5 @@
 "use strict";
-var passport = require("passport");
+const passport = require("passport");
 function authorize() {
     return passport.authenticate("bearer", { session: false });
 }

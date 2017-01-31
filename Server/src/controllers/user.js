@@ -11,25 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var inversify_express_utils_1 = require("inversify-express-utils");
-var inversify_1 = require("inversify");
-var constants_1 = require("../constants");
-var utils_1 = require("../utils");
-var UserController = (function () {
-    function UserController(_db) {
+const inversify_express_utils_1 = require("inversify-express-utils");
+const inversify_1 = require("inversify");
+const constants_1 = require("../constants");
+const utils_1 = require("../utils");
+let UserController = class UserController {
+    constructor(_db) {
         this._db = _db;
     }
-    UserController.prototype.getAll = function (req, res, next) {
-        return "Hello world";
-    };
-    UserController.prototype.get = function (req, res, next) {
-        return "Hello world";
-    };
-    UserController.prototype.editProfile = function (req, res, next) {
-        return "Your are authorized !";
-    };
-    return UserController;
-}());
+    getAll(req, res, next) {
+        return `Hello world`;
+    }
+    get(req, res, next) {
+        return `Hello world`;
+    }
+    editProfile(req, res, next) {
+        return `Your are authorized !`;
+    }
+};
 __decorate([
     inversify_express_utils_1.Get("/"),
     __metadata("design:type", Function),

@@ -16,150 +16,105 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
+        step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t;
-    return { next: verb(0), "throw": verb(1), "return": verb(2) };
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var inversify_1 = require("inversify");
-var constants_1 = require("../constants");
-var graph_1 = require("../database/graph");
-var index_1 = require("./index");
-var PostService = (function () {
-    function PostService(db, userStore, socketService) {
+const inversify_1 = require("inversify");
+const constants_1 = require("../constants");
+const graph_1 = require("../database/graph");
+const index_1 = require("./index");
+let PostService = class PostService {
+    constructor(db, userStore, socketService, channelService) {
         this.db = db;
         this.userStore = userStore;
         this.socketService = socketService;
+        this.channelService = channelService;
     }
-    PostService.prototype.find = function (id) {
-        return this.db.first("match (p:Post {id: {id}}) return p", { id: id })
-            .then(function (r) { return r && r.p ? new graph_1.Post(r.p) : null; });
-    };
-    PostService.prototype.like = function (id, userId) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var user, post, like, likeEdge;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.userStore.find(userId)];
-                    case 1:
-                        user = _a.sent();
-                        return [4 /*yield*/, this.find(id)];
-                    case 2:
-                        post = _a.sent();
-                        return [4 /*yield*/, this.db.first("match (:Post {id: {postId}})-[l:LIKE]-(:User {id: {userId}}) return l", { postId: id, userId: userId }).then(function (r) { return r && r.l ? r.l : null; })];
-                    case 3:
-                        like = _a.sent();
-                        if (!user) {
-                            throw new Error("User not exists");
-                        }
-                        if (!post) {
-                            throw new Error("User not exists");
-                        }
-                        if (like) {
-                            return [2 /*return*/, Promise.resolve(like)];
-                        }
-                        likeEdge = new graph_1.LikeEdge(user, post);
-                        return [2 /*return*/, this.db.createEdge(likeEdge)
-                                .then(function (e) {
-                                _this.socketService.emit("post:like", {
-                                    creationTime: likeEdge.creationTime,
-                                    post: post,
-                                    user: user
-                                });
-                                return e;
-                            })];
-                }
+    find(id) {
+        return this.db.first(`match (u:User)-[]-(p:Post {id: {id}})-[]-(c:Channel) return p, c, u`, { id })
+            .then(r => {
+            if (r && r.p) {
+                let post = new graph_1.Post(r.p);
+                post.channel = new graph_1.Channel(r.c);
+                post.user = new graph_1.User({
+                    id: r.u.id,
+                    username: r.u.username,
+                    pictureUrl: r.u.pictureUrl || ''
+                });
+                return post;
+            }
+            return null;
+        });
+    }
+    like(id, userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.userStore.find(userId);
+            const post = yield this.find(id);
+            const like = yield this.db.first(`match (:Post {id: {postId}})-[l:LIKE]-(:User {id: {userId}}) return l`, { postId: id, userId }).then(r => r && r.l ? r.l : null);
+            if (!user) {
+                throw new Error("User not exists");
+            }
+            if (!post) {
+                throw new Error("User not exists");
+            }
+            if (like) {
+                return Promise.resolve(like);
+            }
+            const likeEdge = new graph_1.LikeEdge(user, post);
+            return this.db.createEdge(likeEdge)
+                .then(e => {
+                this.socketService.emit("post:like", {
+                    creationTime: likeEdge.creationTime,
+                    post,
+                    user
+                });
+                return e;
             });
         });
-    };
-    PostService.prototype.comment = function (id, newComment) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var user, post, comment;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.userStore.find(newComment.userId)];
-                    case 1:
-                        user = _a.sent();
-                        return [4 /*yield*/, this.find(id)];
-                    case 2:
-                        post = _a.sent();
-                        comment = new graph_1.Post();
-                        comment.message = newComment.message;
-                        if (!user) {
-                            throw new Error("User not exists");
-                        }
-                        if (!post) {
-                            throw new Error("User not exists");
-                        }
-                        return [2 /*return*/, this.db.transaction(function (db) { return __awaiter(_this, void 0, void 0, function () {
-                                var userComment, postComment;
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, db.createVertex(comment)];
-                                        case 1:
-                                            _a.sent();
-                                            userComment = new graph_1.UserCommentEdge(user, comment);
-                                            postComment = new graph_1.PostCommentEdge(comment, post);
-                                            return [4 /*yield*/, db.createEdge(userComment)];
-                                        case 2:
-                                            _a.sent();
-                                            return [4 /*yield*/, db.createEdge(postComment)];
-                                        case 3:
-                                            _a.sent();
-                                            return [2 /*return*/, comment];
-                                    }
-                                });
-                            }); }).then(function (e) {
-                                var c = comment;
-                                c.post = post;
-                                c.user = {
-                                    id: user.id,
-                                    username: user.username,
-                                    pictureUrl: user.pictureUrl || ""
-                                };
-                                _this.socketService.emit("post:comment", c);
-                                return e;
-                            })];
-                }
-            });
+    }
+    comment(id, newComment) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.userStore.find(newComment.userId);
+            const post = yield this.find(id);
+            const comment = new graph_1.Post();
+            comment.message = newComment.message;
+            if (!user) {
+                throw new Error("User not exists");
+            }
+            if (!post) {
+                throw new Error("Post not exists");
+            }
+            return this.db.transaction((db) => __awaiter(this, void 0, void 0, function* () {
+                yield db.createVertex(comment);
+                const userComment = new graph_1.UserCommentEdge(user, comment);
+                const postComment = new graph_1.PostCommentEdge(comment, post);
+                yield db.createEdge(userComment);
+                yield db.createEdge(postComment);
+                return comment;
+            })).then((e) => __awaiter(this, void 0, void 0, function* () {
+                let c = comment;
+                c.post = post;
+                c.channel = post.channel;
+                c.user = {
+                    id: user.id,
+                    username: user.username,
+                    pictureUrl: user.pictureUrl || ""
+                };
+                this.socketService.emit("post:comment", c);
+                return e;
+            }));
         });
-    };
-    return PostService;
-}());
+    }
+};
 PostService = __decorate([
     inversify_1.injectable(),
     __param(0, inversify_1.inject(constants_1.TYPES.IGraphDb)),
     __param(1, inversify_1.inject(constants_1.TYPES.UserStore)),
     __param(2, inversify_1.inject(constants_1.TYPES.SocketService)),
+    __param(3, inversify_1.inject(constants_1.TYPES.ChannelService)),
     __metadata("design:paramtypes", [Object, index_1.UserStore,
-        index_1.SocketService])
+        index_1.SocketService,
+        index_1.ChannelService])
 ], PostService);
 exports.PostService = PostService;
 //# sourceMappingURL=PostService.js.map
