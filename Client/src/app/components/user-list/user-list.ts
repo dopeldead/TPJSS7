@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostSocketService, LoggedUser,NotificationsStorageService} from 'services';
 import { Post,Comment,Like,Channel,User,Notification } from '../../models';
 import { NotificationsService, PushNotificationsService} from 'angular2-notifications';
+import { AuthenticationService } from '../../services/index';
 
 @Component({
     selector: 'user-list',
@@ -15,6 +16,7 @@ export class UserListComponent implements OnInit {
     lastOnBottom: true
     }
     constructor( private postSocket: PostSocketService,
+                private authService: AuthenticationService,
             private user: LoggedUser,
             private pushNotificationsService: PushNotificationsService,
             private notificationsService: NotificationsService,
@@ -88,5 +90,13 @@ export class UserListComponent implements OnInit {
             err => console.log(err)
         );
              this.notificationsStorageService.write(this.notifications);
+     }
+     Clear(){
+         this.notifications = [];
+         this.notificationsStorageService.clean();
+     }
+     Disconnect(){
+         this.Clear();
+         this.authService.logout();
      }
 }
