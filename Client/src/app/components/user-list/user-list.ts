@@ -9,6 +9,11 @@ import { NotificationsService, PushNotificationsService} from 'angular2-notifica
 })
 export class UserListComponent implements OnInit {
     notifications: Array<Notification> = [];
+    public options = {
+    position: ["bottom", "left"],
+    timeOut: 5000,
+    lastOnBottom: true
+    }
     constructor( private postSocket: PostSocketService,
             private user: LoggedUser,
             private pushNotificationsService: PushNotificationsService,
@@ -77,8 +82,11 @@ export class UserListComponent implements OnInit {
          }
      }
      DisplayNotif(n:Notification){
-             //this.notificationsService.success(n.title,n.text);
-             this.pushNotificationsService.create(n.title, {body: n.text})
+             this.notificationsService.success(n.title,n.text);
+             this.pushNotificationsService.create(n.title, {body: n.text}).subscribe(
+            res => console.log(res),
+            err => console.log(err)
+        );
              this.notificationsStorageService.write(this.notifications);
      }
 }

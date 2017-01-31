@@ -4,7 +4,7 @@
        <p>{{notif.text}}</p>
        </div>
 </div>
-<simple-notifications></simple-notifications>
+<simple-notifications [options]="options"></simple-notifications>
 <style>
     :host {
         display: block;
@@ -13,5 +13,9 @@
         background: white;
         flex-shrink: 0;
         border-left: 1px solid #d6d6d6;
+    }
+    .item {
+        overflow-y: scroll;
+        height:inherit;
     }
 </style>
