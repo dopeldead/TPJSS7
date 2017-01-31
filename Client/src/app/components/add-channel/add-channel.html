@@ -1,4 +1,4 @@
-<button class="btn btn-default" (click)="modal.show()">Add channel</button>
+<button class="btn btn-success" (click)="modal.show()">Add channel</button>
 <div class="modal fade" bsModal #modal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-content">
         <div class="modal-header">
@@ -14,8 +14,8 @@
                     <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel" required />
                 </div>
                 <div class="form-group modal-footer">
-                    <button [disabled]="!f.form.valid" (click)="modal.hide()" class="btn btn-primary">Valider</button>
-                    <button type="button" class="btn btn-default" (click)="modal.hide()">Annuler</button>
+                    <button [disabled]="!f.form.valid" (click)="modal.hide()" class="btn btn-success">Valider</button>
+                    <button type="button" class="btn btn-danger" (click)="modal.hide()">Annuler</button>
                 </div>
             </form>
         </div>
