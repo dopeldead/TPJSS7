@@ -32,7 +32,6 @@
 ### Activités et notifications 
 
 ### Level II
-8. Afficher une popup de notification avec [angular2-notifications](https://github.com/flauc/angular2-notifications)
 9. Persister les activités dans le [localStorage](https://developer.mozilla.org/fr/docs/Web/API/Window/localStorage)
 
 ### Level III
