@@ -16,6 +16,7 @@ export class RegisterComponent {
     userExists : boolean;
     badAvatar : boolean;
     badPass : boolean;
+    badEmail : boolean;
 
     constructor(
         private registrationService: RegistrationService,
@@ -23,7 +24,8 @@ export class RegisterComponent {
     ) { }
 
     register() {
-        this.userExists = false; this.badPass = false; this.badAvatar = false
+        this.userExists = false; this.badPass = false; 
+        this.badAvatar = false; this.badEmail = false;
         if (this.ngForm.form.invalid) {
             return;
         }
@@ -34,20 +36,23 @@ export class RegisterComponent {
             if(this.model.pictureUrl.startsWith("http://images.google") ) {
                 this.badAvatar = true;
             }
-            
-            if(this.badPass || this.badAvatar){
+            if(!this.model.email.includes('@')) { this.badEmail = true;}
+            this.registrationService.usernameExists(this.model.userName)
+                 .then(
+                    () => {this.userExists = true;
+                });    
+                        
+            if(this.badPass || this.badAvatar || this.badEmail || this.userExists){
                 return;
+
             } else {
-                //this.registrationService.usernameExists(this.model.userName)
-                //.then(
-                  //  () => {this.userExists = true;
-                //});
+                
                 this.registrationService.register(this.model)
                     .then(
                         
                         ()=>{console.log("ok"); this.router.navigateByUrl("/login");},
                         
-                        ()=>{console.log("KO");
+                        e =>{console.log("KO : "+e);
                         
                     });
             }

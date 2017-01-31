@@ -20,8 +20,9 @@
     </div>
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !pictureUrl.valid }">
         <label for="email">email</label>
-        <input type="email" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required />
-    </div>
+        <input type="email" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" required />    </div>
+        <div *ngIf="badEmail" class="registerError">Ceci n'est pas une adresse email valide.</div>
+        <br>
     <div class="form-group">
         <button [disabled]="!f.form.valid" class="btn btn-primary">S'entegistrer</button>
         <a [routerLink]="['/']" class="btn btn-link">Retour</a>
