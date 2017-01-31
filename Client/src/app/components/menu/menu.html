@@ -3,11 +3,14 @@
     </add-channel>
     <ul style="list-style-type:none;padding-left: 0">
       <li *ngFor="let chann of channels">
-          <a  class="list-group-item" [routerLink]="['/channel/',chann.id]" >
+          <a  class="list-group-item" [routerLink]="['/channel/',chann.id]" >  
             {{ chann.name }}
-            </a>     
-      </li>
+          </a>     
+      </li> 
+      <br>
+      <!--<button class="btn btn-default" (click)="AuthenticationService.logOut()" type="submit" style="background-color: rgb(82.7%, 56.9%, 3.2%);margin-left: 35px;">LogOut</button>-->
     </ul>
+    
 </nav>
 
 <style>
@@ -15,5 +18,13 @@
         display: block;
         padding: 0;
         margin: 0;
+    }
+    .list-group-item {
+        font-weight: bold;
+        background-color: ghostwhite;
+        color: black;
+    }
+    .list-group {
+        background-color: whitesmoke;
     }
 </style>

@@ -2,6 +2,7 @@ import { Component, Input,OnInit, EventEmitter } from '@angular/core';
 import { Channel } from 'models';
 import { ChannelService, PostSocketService } from '../../services/index';
 import { Router } from '@angular/router';
+//import { AuthenticationService } from '../../services/index';
 
 
 @Component({
@@ -13,7 +14,8 @@ export class MenuComponent implements OnInit {
 
     constructor(private channelService: ChannelService,
             private router : Router,
-            private postSocket: PostSocketService
+            private postSocket: PostSocketService,
+
     ) {
         this.postSocket.onNewChannel(this.addChannel)
     }
@@ -49,5 +51,8 @@ export class MenuComponent implements OnInit {
         this.channels.unshift(chan);
     }
     @Input() channels: Channel[]; 
+
+
+    
    
 }
