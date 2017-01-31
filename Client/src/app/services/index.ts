@@ -6,6 +6,7 @@ export { LoggedUser } from './User';
 export { SocketService } from './SocketService';
 export { ServerConfiguration } from './ServerConfiguration';
 export { UserStorageService } from './UserStorageService';
+export { NotificationsStorageService } from './NotificationsStorageService';
 export { AuthenticationService } from './AuthenticationService';
 export { AuthGuard } from './AuthGuard';
 export { RegistrationService } from './RegistrationService';

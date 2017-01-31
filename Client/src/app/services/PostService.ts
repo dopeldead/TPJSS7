@@ -38,9 +38,7 @@ export class PostService {
             .toPromise();
     }
     
-    comment(post: Post, message: string): Promise<any> {
-        post.user = this.user;
-        
+    comment(post: Post, message: string): Promise<any> {        
         return this.http
             .post(`${this.config.url}/api/post/${post.id}/comment`, {message})
             .map( r => r.json())
