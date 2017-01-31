@@ -8,10 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const joi = require("joi");
-const utils_1 = require("../../utils");
-class NewUser {
-}
+var joi = require("joi");
+var utils_1 = require("../../utils");
+var NewUser = (function () {
+    function NewUser() {
+    }
+    return NewUser;
+}());
 __decorate([
     utils_1.Constraint(joi.string().required()),
     __metadata("design:type", String)

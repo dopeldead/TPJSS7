@@ -1,17 +1,17 @@
 "use strict";
-const logger = require("morgan");
-const httpStatus = require("http-status");
-const env_1 = require("./env");
-const winston_1 = require("./winston");
-const APIError_1 = require("../utils/APIError");
-const passport = require("passport");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const compress = require("compression");
-const cors = require("cors");
-const expressWinston = require("express-winston");
-const expressValidation = require("express-validation");
-const methodOverride = require("method-override");
+var logger = require("morgan");
+var httpStatus = require("http-status");
+var env_1 = require("./env");
+var winston_1 = require("./winston");
+var APIError_1 = require("../utils/APIError");
+var passport = require("passport");
+var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var compress = require("compression");
+var cors = require("cors");
+var expressWinston = require("express-winston");
+var expressValidation = require("express-validation");
+var methodOverride = require("method-override");
 function configureExpress(app) {
     if (env_1.default.env === "development") {
         app.use(logger("dev"));
@@ -45,23 +45,23 @@ function configureExpress(app) {
 exports.configureExpress = configureExpress;
 function configureErrors(app) {
     // if error is not an instanceOf APIError, convert it.
-    app.use((err, req, res, next) => {
+    app.use(function (err, req, res, next) {
         if (err instanceof expressValidation.ValidationError) {
             // validation error contains errors which is an array of error each containing message[]
-            const unifiedErrorMessage = err.errors.map(error => error.messages.join(". ")).join(" and ");
-            const error = new APIError_1.default(unifiedErrorMessage, err.status, true);
+            var unifiedErrorMessage = err.errors.map(function (error) { return error.messages.join(". "); }).join(" and ");
+            var error = new APIError_1.default(unifiedErrorMessage, err.status, true);
             return next(error);
         }
         else if (!(err instanceof APIError_1.default)) {
-            const apiError = new APIError_1.default(err.message, err.status, err.isPublic);
+            var apiError = new APIError_1.default(err.message, err.status, err.isPublic);
             return next(apiError);
         }
         return next(err);
     });
     // // catch 404 and forward to error handler
-    app.use((req, res, next) => {
+    app.use(function (req, res, next) {
         console.log(res.statusCode);
-        const err = new APIError_1.default("API not found", httpStatus.NOT_FOUND);
+        var err = new APIError_1.default("API not found", httpStatus.NOT_FOUND);
         return next(err);
     });
     // // log error in winston transports except when executing test suite
@@ -71,10 +71,12 @@ function configureErrors(app) {
         }));
     }
     // // error handler, send stacktrace only during development
-    app.use((err, req, res, next) => res.status(err.status).json({
-        message: err.isPublic ? err.message : httpStatus[err.status],
-        stack: env_1.default.env === "development" ? err.stack : {}
-    }));
+    app.use(function (err, req, res, next) {
+        return res.status(err.status).json({
+            message: err.isPublic ? err.message : httpStatus[err.status],
+            stack: env_1.default.env === "development" ? err.stack : {}
+        });
+    });
 }
 exports.configureErrors = configureErrors;
 ;

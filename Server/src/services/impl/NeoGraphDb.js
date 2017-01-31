@@ -8,114 +8,112 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const connection_1 = require("../../utils/connection");
-const decorators_1 = require("../../database/decorators");
+var connection_1 = require("../../utils/connection");
+var decorators_1 = require("../../database/decorators");
 require("reflect-metadata");
-const inversify_1 = require("inversify");
-const uuid = require("uuid");
-let NeoGraphDb = NeoGraphDb_1 = class NeoGraphDb {
-    constructor(uri, cypher) {
+var inversify_1 = require("inversify");
+var uuid = require("uuid");
+var NeoGraphDb = NeoGraphDb_1 = (function () {
+    function NeoGraphDb(uri, cypher) {
         this.cypher = cypher;
         this._db = connection_1.Neo4jConnection.getConnection(uri);
         if (!this.cypher) {
             this.cypher = this._db.cypher.bind(this._db);
         }
     }
-    createVertex(vertice) {
-        let classMeta = Reflect.getMetadata(decorators_1.GraphItemKey, vertice.constructor);
-        let propsMeta = Reflect.getMetadata(decorators_1.PropertiesKey, vertice.constructor);
+    NeoGraphDb.prototype.createVertex = function (vertice) {
+        var classMeta = Reflect.getMetadata(decorators_1.GraphItemKey, vertice.constructor);
+        var propsMeta = Reflect.getMetadata(decorators_1.PropertiesKey, vertice.constructor);
         vertice.id = uuid.v4().toString();
         vertice.creationTime = new Date().getTime();
-        let dbVertex = {};
-        for (let key in propsMeta.properties) {
-            let pMeta = propsMeta.properties[key];
+        var dbVertex = {};
+        for (var key in propsMeta.properties) {
+            var pMeta = propsMeta.properties[key];
             if (pMeta.mandatory && (vertice[key] === undefined || vertice[key] === null)) {
-                throw new Error(`Property ${key} of vertice ${classMeta.name} is required`);
+                throw new Error("Property " + key + " of vertice " + classMeta.name + " is required");
             }
             if (vertice[key] !== undefined) {
                 dbVertex[key] = vertice[key];
             }
         }
-        let dbVertexQuery = `(:${classMeta.name} ${this.serializeGraphProperty(dbVertex)})`;
-        return this.query(`create ${dbVertexQuery}`, dbVertex)
-            .then(r => vertice)
-            .catch(e => {
+        var dbVertexQuery = "(:" + classMeta.name + " " + this.serializeGraphProperty(dbVertex) + ")";
+        return this.query("create " + dbVertexQuery, dbVertex)
+            .then(function (r) { return vertice; })
+            .catch(function (e) {
             throw e;
         });
-    }
-    updateVertex(vertice) {
-        let classMeta = Reflect.getMetadata(decorators_1.GraphItemKey, vertice.constructor);
-        let propsMeta = Reflect.getMetadata(decorators_1.PropertiesKey, vertice.constructor);
-        let query = `match (v:${classMeta.name} {id: '${vertice.id}'}) set `;
-        let builder = [];
-        for (let propName in propsMeta.properties) {
+    };
+    NeoGraphDb.prototype.updateVertex = function (vertice) {
+        var classMeta = Reflect.getMetadata(decorators_1.GraphItemKey, vertice.constructor);
+        var propsMeta = Reflect.getMetadata(decorators_1.PropertiesKey, vertice.constructor);
+        var query = "match (v:" + classMeta.name + " {id: '" + vertice.id + "'}) set ";
+        var builder = [];
+        for (var propName in propsMeta.properties) {
             if ((vertice[propName] === undefined || vertice[propName] === null) && propsMeta.properties[propName].mandatory) {
-                throw new Error(`Property ${propName} of vertice ${classMeta.name} is required`);
+                throw new Error("Property " + propName + " of vertice " + classMeta.name + " is required");
             }
             if (!propsMeta.properties[propName].readonly && vertice[propName] !== undefined) {
-                builder.push(`v.${propName} = {${propName}}`);
+                builder.push("v." + propName + " = {" + propName + "}");
                 builder.push(", ");
             }
         }
         builder.pop();
         query += builder.join("");
-        return this.query(query, vertice).then(r => vertice)
-            .catch(e => {
+        return this.query(query, vertice).then(function (r) { return vertice; })
+            .catch(function (e) {
             throw e;
         });
-    }
-    serializeGraphProperty(obj) {
-        let builder = ["{"];
-        for (let key in obj) {
+    };
+    NeoGraphDb.prototype.serializeGraphProperty = function (obj) {
+        var builder = ["{"];
+        for (var key in obj) {
             if (obj[key] !== undefined && typeof obj[key] !== "object" && typeof obj[key] !== "function") {
-                builder.push(`${key}: {${key}}`);
+                builder.push(key + ": {" + key + "}");
                 builder.push(",");
             }
         }
         builder.pop(); // the last ,
         builder.push("}");
         return builder.join("");
-    }
-    deleteEdge(edge) {
-        let classMeta = Reflect.getMetadata(decorators_1.GraphItemKey, edge.constructor);
-        return this.query(`match ()-[e:${classMeta.name} {id: {id}}]-() delete e`, { id: edge.id });
-    }
-    createEdge(edge) {
-        let fromClassMeta = Reflect.getMetadata(decorators_1.GraphItemKey, edge.from.constructor);
-        let toClassMeta = Reflect.getMetadata(decorators_1.GraphItemKey, edge.to.constructor);
-        let classMeta = Reflect.getMetadata(decorators_1.GraphItemKey, edge.constructor);
-        let propsMeta = Reflect.getMetadata(decorators_1.PropertiesKey, edge.constructor);
+    };
+    NeoGraphDb.prototype.deleteEdge = function (edge) {
+        var classMeta = Reflect.getMetadata(decorators_1.GraphItemKey, edge.constructor);
+        return this.query("match ()-[e:" + classMeta.name + " {id: {id}}]-() delete e", { id: edge.id });
+    };
+    NeoGraphDb.prototype.createEdge = function (edge) {
+        var fromClassMeta = Reflect.getMetadata(decorators_1.GraphItemKey, edge.from.constructor);
+        var toClassMeta = Reflect.getMetadata(decorators_1.GraphItemKey, edge.to.constructor);
+        var classMeta = Reflect.getMetadata(decorators_1.GraphItemKey, edge.constructor);
+        var propsMeta = Reflect.getMetadata(decorators_1.PropertiesKey, edge.constructor);
         edge.id = uuid.v4().toString();
         edge.creationTime = new Date().getTime();
-        let dbVertex = {};
-        for (let key in propsMeta.properties) {
-            let pMeta = propsMeta.properties[key];
+        var dbVertex = {};
+        for (var key in propsMeta.properties) {
+            var pMeta = propsMeta.properties[key];
             if (pMeta.mandatory && edge[key] === undefined || edge[key] === null) {
-                throw new Error(`Property ${key} of vertice ${classMeta.name} is required`);
+                throw new Error("Property " + key + " of vertice " + classMeta.name + " is required");
             }
             if (edge[key] !== undefined) {
                 dbVertex[key] = edge[key];
             }
         }
-        let dbEdgeQuery = `[:${classMeta.name} ${this.serializeGraphProperty(dbVertex)}]`;
-        let query = `
-            match (from:${fromClassMeta.name} {id: '${edge.from.id}'})
-            match (to:${toClassMeta.name} {id: '${edge.to.id}'})
-            create (from)-${dbEdgeQuery}->(to)`;
+        var dbEdgeQuery = "[:" + classMeta.name + " " + this.serializeGraphProperty(dbVertex) + "]";
+        var query = "\n            match (from:" + fromClassMeta.name + " {id: '" + edge.from.id + "'})\n            match (to:" + toClassMeta.name + " {id: '" + edge.to.id + "'})\n            create (from)-" + dbEdgeQuery + "->(to)";
         return this.query(query, dbVertex)
-            .then(r => edge)
-            .catch(e => {
+            .then(function (r) { return edge; })
+            .catch(function (e) {
             throw e;
         });
-    }
-    query(query, params) {
-        return new Promise((resolve, reject) => {
+    };
+    NeoGraphDb.prototype.query = function (query, params) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
             try {
-                this.cypher({
-                    query,
-                    params,
+                _this.cypher({
+                    query: query,
+                    params: params,
                     lean: true
-                }, (err, res) => {
+                }, function (err, res) {
                     if (err) {
                         reject(err);
                     }
@@ -128,36 +126,37 @@ let NeoGraphDb = NeoGraphDb_1 = class NeoGraphDb {
                 reject(e);
             }
         });
-    }
-    first(query, params) {
-        return this.query(query, params).then(r => r[0]);
-    }
-    transaction(scope) {
-        return new Promise((resolve, reject) => {
-            let tx = this._db.beginTransaction();
-            let db = new NeoGraphDb_1(this._db, tx.cypher.bind(tx));
-            let commit = (result) => {
+    };
+    NeoGraphDb.prototype.first = function (query, params) {
+        return this.query(query, params).then(function (r) { return r[0]; });
+    };
+    NeoGraphDb.prototype.transaction = function (scope) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var tx = _this._db.beginTransaction();
+            var db = new NeoGraphDb_1(_this._db, tx.cypher.bind(tx));
+            var commit = function (result) {
                 try {
-                    tx.commit(() => resolve(result));
+                    tx.commit(function () { return resolve(result); });
                 }
                 catch (e) {
                     reject(e);
                 }
             };
-            let rollback = (reason) => {
+            var rollback = function (reason) {
                 try {
-                    tx.rollback(() => reject(new Error(reason)));
+                    tx.rollback(function () { return reject(new Error(reason)); });
                 }
                 catch (e) {
                     reject(e);
                 }
             };
             try {
-                let res = scope(db, commit, rollback);
+                var res = scope(db, commit, rollback);
                 if (res && typeof res.then === "function") {
-                    res.then(val => {
+                    res.then(function (val) {
                         commit(val);
-                    }, e => {
+                    }, function (e) {
                         rollback(e);
                     });
                 }
@@ -166,8 +165,9 @@ let NeoGraphDb = NeoGraphDb_1 = class NeoGraphDb {
                 rollback(e);
             }
         });
-    }
-};
+    };
+    return NeoGraphDb;
+}());
 NeoGraphDb = NeoGraphDb_1 = __decorate([
     inversify_1.injectable(),
     __metadata("design:paramtypes", [String, Object])

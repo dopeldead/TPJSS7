@@ -1,4 +1,9 @@
 "use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,10 +13,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const decorators_1 = require("../decorators");
-const dbtypes_1 = require("../dbtypes");
-let Post = class Post extends dbtypes_1.Vertex {
-};
+var decorators_1 = require("../decorators");
+var dbtypes_1 = require("../dbtypes");
+var Post = (function (_super) {
+    __extends(Post, _super);
+    function Post() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return Post;
+}(dbtypes_1.Vertex));
 __decorate([
     decorators_1.Prop({
         mandatory: true
@@ -19,15 +29,18 @@ __decorate([
     __metadata("design:type", String)
 ], Post.prototype, "message", void 0);
 Post = __decorate([
-    decorators_1.GraphItem("Post"),
-    __metadata("design:paramtypes", [])
+    decorators_1.GraphItem("Post")
 ], Post);
 exports.Post = Post;
-let PostCommentEdge = class PostCommentEdge extends dbtypes_1.Edge {
-};
+var PostCommentEdge = (function (_super) {
+    __extends(PostCommentEdge, _super);
+    function PostCommentEdge() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return PostCommentEdge;
+}(dbtypes_1.Edge));
 PostCommentEdge = __decorate([
-    decorators_1.GraphItem("POST_COMMENT"),
-    __metadata("design:paramtypes", [])
+    decorators_1.GraphItem("POST_COMMENT")
 ], PostCommentEdge);
 exports.PostCommentEdge = PostCommentEdge;
 //# sourceMappingURL=post.js.map

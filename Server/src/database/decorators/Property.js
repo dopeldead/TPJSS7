@@ -1,20 +1,20 @@
 "use strict";
 require("reflect-metadata");
-const deepcopy = require("deepcopy");
-const Key = "PropertiesMeta";
+var deepcopy = require("deepcopy");
+var Key = "PropertiesMeta";
 exports.Key = Key;
 function Prop(propertyMeta) {
     return function (target, propertyName) {
-        let meta = deepcopy(Reflect.getMetadata(Key, target.constructor) || {
+        var meta = deepcopy(Reflect.getMetadata(Key, target.constructor) || {
             properties: {},
             indexes: [],
             uniques: []
         });
         propertyMeta = propertyMeta || {};
         if (!propertyMeta.typeName) {
-            let t = Reflect.getMetadata("design:type", target, propertyName);
+            var t = Reflect.getMetadata("design:type", target, propertyName);
             if (!t) {
-                throw new Error(`Unable to resolve type. You must provide a type for ${propertyName} on ${target.name}`);
+                throw new Error("Unable to resolve type. You must provide a type for " + propertyName + " on " + target.name);
             }
             propertyMeta.typeName = t.name;
         }

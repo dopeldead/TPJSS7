@@ -1,5 +1,5 @@
 "use strict";
-const types = {
+var types = {
     IGraphDb: "IGraphDb",
     IDocumentDb: "IDocumentDb",
     LoggerInstance: "LoggerInstance",

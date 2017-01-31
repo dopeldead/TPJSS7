@@ -20,13 +20,11 @@
 #### Level II
 
 4. Afficher les messages d'erreurs de validation pour chaque champs
-5. Afficher un message si le login à échoué
 
 ### Register
 
 #### Level II
-4. Afficher les messages d'erreurs de validation  pour chaque champs
-5. Gérer les username déjà utilisés
+
 
 ### Post 
 
