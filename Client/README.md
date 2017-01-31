@@ -19,7 +19,6 @@
 
 #### Level II
 
-4. Afficher les messages d'erreurs de validation pour chaque champs
 
 ### Post 
 
