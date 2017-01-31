@@ -17,6 +17,7 @@ export class LoginComponent  {
                 ) { }
 
     login() {
+        var badLogin = false;
         this.authService.authenticate(this.model).then(
                     
                     ()=>{console.log("ok"); 

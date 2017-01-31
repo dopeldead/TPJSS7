@@ -33,8 +33,8 @@ export class RegisterComponent {
         else{
             this.registrationService.usernameExists(this.model.userName) 
                     .then( 
-                    e => {badUser = true; 
-                        console.log("Resp : "+e)
+                    () => {badUser = true; 
+                        
                 });
             if(this.model.password.length < 6)  {
                 this.badPass = true; 
@@ -56,6 +56,7 @@ export class RegisterComponent {
                         ()=>{console.log("ok"); this.router.navigateByUrl("/login");},
                         
                         e =>{console.log("KO : "+e);
+                        this.userExists = true;
                     });
             }
             
