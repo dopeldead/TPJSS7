@@ -28,6 +28,7 @@ export class SocialFeedComponent implements OnInit {
     }
 
     addPost = (post:Post) => {
+        if(post.channel.id===this.channelId)
         this.items.unshift(post);
     }
    
