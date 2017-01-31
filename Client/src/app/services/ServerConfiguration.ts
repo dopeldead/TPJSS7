@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class ServerConfiguration {
-    host = 'localhost';
+    host = '10.8.111.12';
     port = 3001;
     uriScheme = 'http';
     url: string;

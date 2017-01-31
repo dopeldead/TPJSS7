@@ -37,23 +37,22 @@ export class RegisterComponent {
                 this.badAvatar = true;
             }
             if(!this.model.email.includes('@')) { this.badEmail = true;}
-            this.registrationService.usernameExists(this.model.userName)
-                 .then(
-                    () => {this.userExists = true;
-                });    
-                        
-            if(this.badPass || this.badAvatar || this.badEmail || this.userExists){
+              
+
+            if(this.badPass || this.badAvatar || this.badEmail ){
                 return;
 
             } else {
-                
+                this.registrationService.usernameExists(this.model.userName) 
+                    .then( 
+                    () => {this.userExists = true; 
+                });
                 this.registrationService.register(this.model)
                     .then(
                         
                         ()=>{console.log("ok"); this.router.navigateByUrl("/login");},
                         
                         e =>{console.log("KO : "+e);
-                        
                     });
             }
             
