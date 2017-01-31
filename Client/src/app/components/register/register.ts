@@ -26,10 +26,16 @@ export class RegisterComponent {
     register() {
         this.userExists = false; this.badPass = false; 
         this.badAvatar = false; this.badEmail = false;
+        var badUser = false;
         if (this.ngForm.form.invalid) {
             return;
         }
         else{
+            this.registrationService.usernameExists(this.model.userName) 
+                    .then( 
+                    e => {badUser = true; 
+                        console.log("Resp : "+e)
+                });
             if(this.model.password.length < 6)  {
                 this.badPass = true; 
             }
@@ -38,15 +44,12 @@ export class RegisterComponent {
             }
             if(!this.model.email.includes('@')) { this.badEmail = true;}
               
-
-            if(this.badPass || this.badAvatar || this.badEmail ){
+            if(badUser) { this.userExists = true; }
+            if(this.badPass || this.badAvatar || this.badEmail || this.userExists){
                 return;
 
             } else {
-                this.registrationService.usernameExists(this.model.userName) 
-                    .then( 
-                    () => {this.userExists = true; 
-                });
+                
                 this.registrationService.register(this.model)
                     .then(
                         

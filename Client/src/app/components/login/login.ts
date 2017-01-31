@@ -23,8 +23,9 @@ export class LoginComponent  {
                         this.router.navigateByUrl("/");
                     },
                     //here do the handle of rrors liek already used userName
-                    e=> {console.log("KO : "+JSON.stringify(e));
-                    this.loginFailed = true;   
+                    e => {console.log("KO : "+JSON.stringify(e));
+                    console.log(this.model.userName+ " : " + this.model.password);
+                    this.loginFailed = true;
                     }
                 );
     }
