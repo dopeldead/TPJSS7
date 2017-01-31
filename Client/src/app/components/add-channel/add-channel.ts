@@ -23,7 +23,6 @@ export class AddChannelComponent {
 
     save() {
         if (this.ngForm.valid) {
-            console.log("T2");
             this.callParent.emit(this.model.name);
         }
     }

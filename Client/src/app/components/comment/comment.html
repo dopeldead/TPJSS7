@@ -1,41 +1,29 @@
 <div class="header">
     <div class="user-picture">
-        <img src={{post.user.pictureUrl}} alt="Bad picture" height="42" width="42">
+        <img src={{comment.user.pictureUrl}} alt="Bad picture" height="42" width="42">
     </div>
-    <div class="username">{{post.user.username}}
+    <div class="username">{{comment.user.username}}
     </div>
     <div class="right">
-        <div class="date" >{{post.creationTime|date:"dd/MM HH:mm"}}</div>
-        <div class="actions">
-            <a [class.liked]="post.liked"(click)="DoLike()" >
-                <i class="glyphicon glyphicon-heart"></i>
-            </a>
-            <button class="glyphicon glyphicon-plus reply" (click)="DoAnswer()"></button>
-    </div>
-    
+        <div class="date" >{{comment.creationTime|date:"dd/MM HH:mm"}}</div>    
     </div>
 </div>
 <div class="body">
-    <div *ngIf="post.content!=undefined">
-    <picture-post-content *ngIf="post.content.type=='picture'" [postContent]="post.content">
+    <div *ngIf="comment.content!=undefined">
+    <picture-post-content *ngIf="comment.content.type=='picture'" [postContent]="comment.content">
 
     </picture-post-content>
-    <video-post-content *ngIf="post.content.type=='video'" [postContent]="post.content">
+    <video-post-content *ngIf="comment.content.type=='video'" [postContent]="comment.content">
 
     </video-post-content>
-    <youtube-post-content *ngIf="post.content.type=='youtube'" [postContent]="post.content">
+    <youtube-post-content *ngIf="comment.content.type=='youtube'" [postContent]="comment.content">
 
     </youtube-post-content>  
     </div>
-    <pre class="message">{{post.message}}</pre>
+    <pre class="message">{{comment.message}}</pre>
 
 </div>
 <div class="footer">
-          <comment *ngFor="let com of post.comments" [comment]="com">
-    </comment>
-    <div *ngIf="visible" class="social-app-inputs">
-        <post-comment (callParent) = "callParent($event)" [post]="post"></post-comment>
-    </div>
 </div>
 <style>
     :host {
@@ -43,7 +31,6 @@
         display: block;
         border-radius: 4px;
         border: 1px solid #d8d8d8;
-        margin-top: 20px;
     }
     .user-picture {
         width: 50px;
@@ -53,11 +40,6 @@
     .header {
         padding: 15px;
         display: flex;
-    }
-    .footer{
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-bottom: 5px;
     }
     .username {
         font-weight: bold;
